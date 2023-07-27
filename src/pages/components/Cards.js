@@ -1,6 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import { useCart, useDispatchChart } from "./ContextReducer";
 
-export default function Cards() {
+export default function Cards(props) {
+  let dispatch = useDispatchChart();
+  let data = useCart();
+  const option = props.options;
+  const priceOption = Object.keys(option);
+  const [qty, setQty] = useState(1);
+  const [size, setSize] = useState("");
+  const handleAddToCart = async () => {
+    await dispatch({
+      type: "ADD",
+      id: props.foodItem._id,
+      name: props.foodItem.name,
+      price: props.finalPrice,
+      qty: qty,
+      size: size,
+    });
+    console.log(data);
+  };
+
   return (
     <div>
       {" "}
@@ -9,15 +28,19 @@ export default function Cards() {
         style={{ width: "18rem", maxHeight: "360px" }}
       >
         <img
-          src="https://media.istockphoto.com/id/547046390/photo/garlic-bread.jpg?s=612x612&w=0&k=20&c=oArNgkbjjPKlToDnBhL7xNwU4_eJLPTaLbAlIuunHDY="
+          src={props.foodItem.img}
           className="card-img-top"
           alt="..."
+          style={{ height: "120px", objectFit: "fill" }}
         />
         <div className="card-body">
-          <h5 className="card-title">Card title</h5>
+          <h5 className="card-title">{props.foodItem.name}</h5>
           <p className="card-text">Food item</p>
           <div className="container w-100">
-            <select className="m-2 h-100 bg-success rounded">
+            <select
+              className="m-2 h-100 bg-success rounded"
+              onChange={(e) => setQty(e.target.value)}
+            >
               {Array.from(Array(6), (e, i) => {
                 return (
                   <option key={i + 1} value={i + 1}>
@@ -26,12 +49,27 @@ export default function Cards() {
                 );
               })}
             </select>
-            <select className="m-2 h-100 bg-success rounded">
-              <option value="Half">Half</option>
-              <option value="Full">Full</option>
+            <select
+              className="m-2 h-100 bg-success rounded"
+              onChange={(e) => setSize(e.target.value)}
+            >
+              {priceOption.map((data) => {
+                return (
+                  <option key={data} value={data}>
+                    {data}
+                  </option>
+                );
+              })}
             </select>
             <div className="d-inline h-100 fs-5">Total Price</div>
           </div>
+          <hr></hr>
+          <button
+            className="btn btn-success justify-centre ms-2"
+            onClick={handleAddToCart}
+          >
+            Add To Cart
+          </button>
         </div>
       </div>
     </div>

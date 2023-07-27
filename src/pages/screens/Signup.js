@@ -1,34 +1,31 @@
-import { useState } from "react";
-import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import React, { useState } from "react";
 
-export default function Login() {
-  const router = useRouter();
+export default function Signup() {
   const [data, setData] = useState({
+    name: "",
     email: "",
     password: "",
+    geolocation: "",
   });
   const hanndleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/loginuser", {
+    const response = await fetch("http://localhost:5000/api/createuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        name: data.name,
         email: data.email,
         password: data.password,
+        location: data.geolocation,
       }),
     });
     const json = await response.json();
     console.log(json);
     if (!json.success) {
       alert("Enter valid Credentials");
-    } else {
-      localStorage.setItem("authToken", json.authToken);
-      console.log(localStorage.getItem("authToken"));
-      router.push("/");
     }
   };
 
@@ -36,9 +33,21 @@ export default function Login() {
     setData({ ...data, [e.target.name]: e.target.value });
   };
   return (
-    <div>
+    <>
       <div className="container">
         <form onSubmit={hanndleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">
+              Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="name"
+              value={data.name}
+              onChange={onChange}
+            />
+          </div>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
               Email address
@@ -69,15 +78,27 @@ export default function Login() {
               onChange={onChange}
             />
           </div>
+          <div className="mb-3">
+            <label htmlFor="address" className="form-label">
+              Address
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="geolocation"
+              value={data.geolocation}
+              onChange={onChange}
+            />
+          </div>
 
           <button type="submit" className="btn btn-success">
             Submit
           </button>
-          <Link href="/screens/Signup" className="m-3 btn btn-danger">
-            New User
+          <Link href="/screens/Login" className="m-3 btn btn-danger">
+            Already a user
           </Link>
         </form>
       </div>
-    </div>
+    </>
   );
 }
