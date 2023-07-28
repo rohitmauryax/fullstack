@@ -113,10 +113,17 @@ export default function () {
           foodCat.map((data) => {
             return (
               <div className="row mb-3">
-                <div key={data._id} className="fs- m-3">
+                <div key={data._id} className="fs-3 m-3">
                   {data.CategoryName}
                 </div>
-                <hr />
+                <hr
+                  id="hr-success"
+                  style={{
+                    height: "4px",
+                    backgroundImage:
+                      "-webkit-linear-gradient(left,rgb(0, 255, 137),rgb(0, 0, 0))",
+                  }}
+                />
                 {foodItem
                   .filter(
                     (item) =>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Navbar from "../components/Navbar";
 
 export default function Login() {
   const router = useRouter();
@@ -22,10 +23,11 @@ export default function Login() {
       }),
     });
     const json = await response.json();
-    console.log(json);
+    // console.log(json);
     if (!json.success) {
       alert("Enter valid Credentials");
     } else {
+      localStorage.setItem("userEmail", data.email);
       localStorage.setItem("authToken", json.authToken);
       console.log(localStorage.getItem("authToken"));
       router.push("/");
@@ -36,16 +38,29 @@ export default function Login() {
     setData({ ...data, [e.target.name]: e.target.value });
   };
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage:
+          'url("https://images.pexels.com/photos/326278/pexels-photo-326278.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")',
+        height: "100vh",
+        backgroundSize: "cover",
+      }}
+    >
+      <div>
+        <Navbar />
+      </div>
       <div className="container">
-        <form onSubmit={hanndleSubmit}>
-          <div className="mb-3">
+        <form
+          className="w-50 m-auto mt-5 border text-light border-success rounded"
+          onSubmit={hanndleSubmit}
+        >
+          <div className="mb-3 text-light">
             <label htmlFor="exampleInputEmail1" className="form-label">
               Email address
             </label>
             <input
               type="email"
-              className="form-control"
+              className="form-control text-light bg-dark"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               name="email"
@@ -62,7 +77,7 @@ export default function Login() {
             </label>
             <input
               type="password"
-              className="form-control"
+              className="form-control text-light bg-dark"
               id="exampleInputPassword1"
               name="password"
               value={data.password}

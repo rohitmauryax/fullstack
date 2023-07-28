@@ -1,24 +1,61 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useCart, useDispatchChart } from "./ContextReducer";
 
 export default function Cards(props) {
   let dispatch = useDispatchChart();
   let data = useCart();
+  const priceRef = useRef();
   const option = props.options;
   const priceOption = Object.keys(option);
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("");
   const handleAddToCart = async () => {
+    let food = [];
+    for (const item of data) {
+      if (item.id === props.foodItem._id) {
+        food = item;
+        break;
+      }
+    }
+    if (food !== []) {
+      if (food.size === size) {
+        await dispatch({
+          type: "UPDATE",
+          id: props.foodItem._id,
+          price: finalPrice,
+          qty: qty,
+        });
+        return;
+      } else if (food.size !== size) {
+        await dispatch({
+          type: "ADD",
+          id: props.foodItem._id,
+          name: props.foodItem.name,
+          price: finalPrice,
+          img: props.foodItem.img,
+          qty: qty,
+          size: size,
+        });
+        console.log("size different");
+        return;
+      }
+      return;
+    }
     await dispatch({
       type: "ADD",
       id: props.foodItem._id,
       name: props.foodItem.name,
-      price: props.finalPrice,
+      price: finalPrice,
       qty: qty,
       size: size,
     });
-    console.log(data);
+    //console.log(data);
   };
+
+  let finalPrice = qty * parseInt(option[size]);
+  useEffect(() => {
+    setSize(priceRef.current.value);
+  }, []);
 
   return (
     <div>
@@ -51,6 +88,7 @@ export default function Cards(props) {
             </select>
             <select
               className="m-2 h-100 bg-success rounded"
+              ref={priceRef}
               onChange={(e) => setSize(e.target.value)}
             >
               {priceOption.map((data) => {
@@ -61,7 +99,7 @@ export default function Cards(props) {
                 );
               })}
             </select>
-            <div className="d-inline h-100 fs-5">Total Price</div>
+            <div className="d-inline h-100 fs-5">₹{finalPrice}</div>
           </div>
           <hr></hr>
           <button

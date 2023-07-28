@@ -13,6 +13,7 @@ export default function Document() {
       </Head>
 
       <body>
+        <div id="cart-root"></div>
         <Main />
         <NextScript />
       </body>
