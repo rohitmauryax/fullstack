@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import Home from "./screens/Home";
+import Home from "./screens/Home.page";
 import { CartProvider } from "./components/ContextReducer";
 //import "../../node_modules/bootstrap-dark-5/dist/css/bootstrap-dark.min.css";
 

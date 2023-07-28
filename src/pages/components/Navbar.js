@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Modal from "@/Modal";
-import Cart from "../screens/Cart";
+import Cart from "../screens/Cart.page";
 import { useCart } from "./ContextReducer";
 import { Badge } from "@mui/material";
 
