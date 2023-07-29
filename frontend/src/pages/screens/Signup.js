@@ -27,7 +27,7 @@ export default function Signup() {
     // console.log(latlong)
     let [lat, long] = latlong;
     console.log(lat, long);
-    const response = await fetch("http://localhost:5000/api/getlocation", {
+    const response = await fetch("https://next-crud-g50c.onrender.com/api/getlocation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
