@@ -42,7 +42,7 @@ export default function Signup() {
 
   const hanndleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/createuser", {
+    const response = await fetch("https://next-crud-g50c.onrender.com/api/createuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
