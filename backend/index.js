@@ -5,7 +5,7 @@ const mongoDB = require("./db");
 mongoDB();
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://foodhub123.netlify.app/");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin,X-Requested-With, Content-Type, Accept"
