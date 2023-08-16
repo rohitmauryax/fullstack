@@ -12,16 +12,19 @@ export default function Login() {
   });
   const hanndleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/loginuser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: data.email,
-        password: data.password,
-      }),
-    });
+    const response = await fetch(
+      "https://fullstack-blond.vercel.app/api/loginuser",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+        }),
+      }
+    );
     const json = await response.json();
     // console.log(json);
     if (!json.success) {

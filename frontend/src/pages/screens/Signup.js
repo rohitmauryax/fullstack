@@ -27,13 +27,16 @@ export default function Signup() {
     // console.log(latlong)
     let [lat, long] = latlong;
     console.log(lat, long);
-    const response = await fetch("http://localhost:5000/api/getlocation", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ latlong: { lat, long } }),
-    });
+    const response = await fetch(
+      "https://fullstack-blond.vercel.app/api/getlocation",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ latlong: { lat, long } }),
+      }
+    );
     const { location } = await response.json();
     console.log(location);
     setAddress(location);
@@ -42,18 +45,21 @@ export default function Signup() {
 
   const hanndleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/createuser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        location: data.geolocation,
-      }),
-    });
+    const response = await fetch(
+      "https://fullstack-blond.vercel.app/api/createuser",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          location: data.geolocation,
+        }),
+      }
+    );
     const json = await response.json();
     console.log(json);
     if (!json.success) {
